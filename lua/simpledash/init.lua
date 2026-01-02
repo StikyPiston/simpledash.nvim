@@ -1,34 +1,33 @@
 local M = {}
 
--- Block letters (5x5)
 local letters = {
-  H = {
-    "█   █",
-    "█   █",
-    "█████",
-    "█   █",
-    "█   █",
-  },
-  E = {
-    "█████",
+  h = {
+    "█    ",
     "█    ",
     "████ ",
-    "█    ",
-    "█████",
+    "█   █",
+    "█   █",
   },
-  L = {
-    "█    ",
-    "█    ",
-    "█    ",
-    "█    ",
-    "█████",
+  e = {
+    "     ",
+    " ███ ",
+    "█   █",
+    "████ ",
+    " ███ ",
   },
-  O = {
-    "█████",
+  l = {
+    "██   ",
+    " █   ",
+    " █   ",
+    " █   ",
+    "███  ",
+  },
+  o = {
+    "     ",
+    "████ ",
     "█   █",
     "█   █",
-    "█   █",
-    "█████",
+    "████ ",
   },
   ["."] = {
     "     ",
@@ -39,7 +38,7 @@ local letters = {
   },
 }
 
-local word = { "H", "E", "L", "L", "O", "." }
+local word = { "h", "e", "l", "l", "o", "." }
 
 local function build_lines()
   local lines = {}
@@ -77,13 +76,11 @@ local function center_screen(lines)
 
   local result = {}
 
-  -- Vertical centering
   local top_pad = math.max(0, math.floor((win_h - #lines) / 2))
   for _ = 1, top_pad do
     table.insert(result, "")
   end
 
-  -- Horizontal centering
   for _, line in ipairs(lines) do
     local pad = math.max(0, math.floor((win_w - vim.fn.strdisplaywidth(line)) / 2))
     table.insert(result, string.rep(" ", pad) .. line)
@@ -113,7 +110,6 @@ local function show()
     vim.api.nvim_buf_add_highlight(buf, -1, hl, i, 0, -1)
   end
 
-  -- Recenter on resize
   vim.api.nvim_create_autocmd("WinResized", {
     buffer = buf,
     callback = function()
